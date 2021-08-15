@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <script>
+        if ('NDEFReader' in window) {
+
+
+            const ndef = new NDEFReader();
+            ndef.scan().then(() => {
+                console.log("Scan started successfully.");
+                ndef.onreadingerror = () => {
+                    console.log("Cannot read data from the NFC tag. Try another one?");
+                };
+
+                ndef.onreading = event => {
+                    const message = event.message;
+                    for (const record of message.records) {
+                        console.log("Record type:  " + record.recordType);
+                        console.log("MIME type:    " + record.mediaType);
+                        console.log("Record id:    " + record.id);
+                        switch (record.recordType) {
+                            case "text":
+                                document.getElementById("test").innerText = JSON.stringify(record);
+                                // TODO: Read text record with record data, lang, and encoding.
+                                break;
+                            case "url":
+                                // TODO: Read URL record with record data.
+                                break;
+                            default:
+                            // TODO: Handle other records with record data.
+                        }
+                    }
+
+                };
+            }).catch(error => {
+                console.log(`Error! Scan failed to start: ${error}.`);
+            });
+
+
+        }
+    </script>
+</body>
+
+</html>
