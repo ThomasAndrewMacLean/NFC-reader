@@ -16,7 +16,7 @@
         doloribus est!
     </p>
 
-    <button id="scanButton">scanButton</button>
+    <button id="scanButton">scanButton👹</button>
     <div id="test"></div>
     <div id="test1"></div>
     <div id="test2"></div>
@@ -24,7 +24,11 @@
     <div id="test4"></div>
     <div id="test5"></div>
     <div id="test6"></div>
+    <div id="test7"></div>
     <script>
+        try {
+            
+       
         if ('NDEFReader' in window) {
 
             document.getElementById("test1").innerText = 'NDEFReader';
@@ -79,6 +83,11 @@
                 // Prompt user to allow UA to send and receive info when they tap NFC devices.
                 startScanning();
             };
+        }
+
+    } catch (error) {
+        document.getElementById("test7").innerText = JSON.stringify(error);
+
         }
     </script>
 </body>
