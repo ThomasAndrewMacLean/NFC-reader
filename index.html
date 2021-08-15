@@ -26,6 +26,7 @@
     <div id="test6"></div>
     <div id="test7"></div>
     <div id="test8"></div>
+    <div id="test9"></div>
     <script>
         try {
             
@@ -35,6 +36,11 @@
             document.getElementById("test1").innerText = 'NDEFReader';
 
             const ndef = new NDEFReader();
+            ndef.addEventListener("reading" , (f) => { 
+                document.getElementById("test9").innerText = JSON.stringify(f);
+
+
+            })
             const startScanning = () => {
                 document.getElementById("test8").innerText = ("Starting");
 
