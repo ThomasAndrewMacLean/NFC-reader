@@ -11,15 +11,20 @@
 <body>
     <h1>Tab your card</h1>
     <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <div id="test4"></div>
     <script>
         if ('NDEFReader' in window) {
 
+            document.getElementById("test1").innerText = 'NDEFReader';
 
             const ndef = new NDEFReader();
             ndef.scan().then(() => {
-                console.log("Scan started successfully.");
+                document.getElementById("test2").innerText =("Scan started successfully.");
                 ndef.onreadingerror = () => {
-                    console.log("Cannot read data from the NFC tag. Try another one?");
+                    document.getElementById("test3").innerText =("Cannot read data from the NFC tag. Try another one?");
                 };
 
                 ndef.onreading = event => {
@@ -43,7 +48,7 @@
 
                 };
             }).catch(error => {
-                console.log(`Error! Scan failed to start: ${error}.`);
+                document.getElementById("test4").innerText =(`Error! Scan failed to start: ${error}.`);
             });
 
 
