@@ -11,7 +11,9 @@
 <body>
     <h1>Tab your card</h1>
     <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, in! Hic facilis eveniet omnis? Earum reprehenderit inventore, nisi excepturi aperiam impedit, quis dolor quaerat quia corporis consequatur alias doloribus est!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, in! Hic facilis eveniet omnis? Earum
+        reprehenderit inventore, nisi excepturi aperiam impedit, quis dolor quaerat quia corporis consequatur alias
+        doloribus est!
     </p>
     <div id="test"></div>
     <div id="test1"></div>
@@ -25,40 +27,51 @@
             document.getElementById("test1").innerText = 'NDEFReader';
 
             const ndef = new NDEFReader();
-            ndef.scan().then(() => {
-                document.getElementById("test2").innerText =("Scan started successfully.");
-                ndef.onreadingerror = () => {
-                    document.getElementById("test3").innerText =("Cannot read data from the NFC tag. Try another one?");
-                };
+            const startScanning = () => {
+                ndef.scan().then(() => {
+                    document.getElementById("test2").innerText = ("Scan started successfully.");
+                    ndef.onreadingerror = () => {
+                        document.getElementById("test3").innerText = ("Cannot read data from the NFC tag. Try another one?");
+                    };
 
-                ndef.onreading = event => {
-                    const message = event.message;
-                    for (const record of message.records) {
-                        console.log("Record type:  " + record.recordType);
-                        console.log("MIME type:    " + record.mediaType);
-                        console.log("Record id:    " + record.id);
-                        switch (record.recordType) {
-                            case "text":
-                                document.getElementById("test").innerText = JSON.stringify(record);
-                                // TODO: Read text record with record data, lang, and encoding.
-                                break;
-                            case "url":
-                                // TODO: Read URL record with record data.
-                                break;
-                            default:
-                            // TODO: Handle other records with record data.
+                    ndef.onreading = event => {
+                        const message = event.message;
+                        for (const record of message.records) {
+                            console.log("Record type:  " + record.recordType);
+                            console.log("MIME type:    " + record.mediaType);
+                            console.log("Record id:    " + record.id);
+                            switch (record.recordType) {
+                                case "text":
+                                    document.getElementById("test").innerText = JSON.stringify(record);
+                                    // TODO: Read text record with record data, lang, and encoding.
+                                    break;
+                                case "url":
+                                    // TODO: Read URL record with record data.
+                                    break;
+                                default:
+                                // TODO: Handle other records with record data.
+                            }
                         }
-                    }
 
-                };
-            }).catch(error => {
-                document.getElementById("test4").innerText =(`Error! Scan failed to start: ${error}.`);
-            });
+                    };
+                }).catch(error => {
+                    document.getElementById("test4").innerText = (`Error! Scan failed to start: ${error}.`);
+                });
+            }
 
+        }
 
-        }else{
-            document.getElementById("test5").innerText = 'NO NDEFReader';
-
+        const nfcPermissionStatus = await navigator.permissions.query({ name: "nfc" });
+        if (nfcPermissionStatus.state === "granted") {
+            // NFC access was previously granted, so we can start NFC scanning now.
+            startScanning();
+        } else {
+            // Show a "scan" button.
+            document.querySelector("#scanButton").style.display = "block";
+            document.querySelector("#scanButton").onclick = event => {
+                // Prompt user to allow UA to send and receive info when they tap NFC devices.
+                startScanning();
+            };
         }
     </script>
 </body>
