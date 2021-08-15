@@ -67,22 +67,24 @@
             }
 
         }
+        const checkStatus = async() => {
 
-        const nfcPermissionStatus = await navigator.permissions.query({ name: "nfc" });
-        document.getElementById("test6").innerText = JSON.stringify(nfcPermissionStatus)
-
-        if (nfcPermissionStatus.state === "granted") {
-            document.getElementById("test5").innerText = ("granted?");
-            // NFC access was previously granted, so we can start NFC scanning now.
-            startScanning();
-        } else {
-            document.getElementById("test5").innerText = ("clickbutton");
-
-         
-            document.querySelector("#scanButton").onclick = event => {
-                // Prompt user to allow UA to send and receive info when they tap NFC devices.
+            const nfcPermissionStatus = await navigator.permissions.query({ name: "nfc" });
+            document.getElementById("test6").innerText = JSON.stringify(nfcPermissionStatus)
+    
+            if (nfcPermissionStatus.state === "granted") {
+                document.getElementById("test5").innerText = ("granted?");
+                // NFC access was previously granted, so we can start NFC scanning now.
                 startScanning();
-            };
+            } else {
+                document.getElementById("test5").innerText = ("clickbutton");
+    
+             
+                document.querySelector("#scanButton").onclick = event => {
+                    // Prompt user to allow UA to send and receive info when they tap NFC devices.
+                    startScanning();
+                };
+            }
         }
 
     } catch (error) {
