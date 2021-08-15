@@ -50,9 +50,9 @@
                             console.log("Record type:  " + record.recordType);
                             console.log("MIME type:    " + record.mediaType);
                             console.log("Record id:    " + record.id);
+                            document.getElementById("test").innerText = JSON.stringify(record);
                             switch (record.recordType) {
                                 case "text":
-                                    document.getElementById("test").innerText = JSON.stringify(record);
                                     // TODO: Read text record with record data, lang, and encoding.
                                     break;
                                 case "url":
