@@ -25,6 +25,7 @@
     <div id="test5"></div>
     <div id="test6"></div>
     <div id="test7"></div>
+    <div id="test8"></div>
     <script>
         try {
             
@@ -35,6 +36,8 @@
 
             const ndef = new NDEFReader();
             const startScanning = () => {
+                document.getElementById("test8").innerText = ("Starting");
+
                 ndef.scan().then(() => {
                     document.getElementById("test2").innerText = ("Scan started successfully.");
                     ndef.onreadingerror = () => {
