@@ -51,12 +51,12 @@
                     };
 
                     ndef.onreading = event => {
+                        document.getElementById("test").innerText = JSON.stringify(event);
                         const message = event.message;
                         for (const record of message.records) {
                             console.log("Record type:  " + record.recordType);
                             console.log("MIME type:    " + record.mediaType);
                             console.log("Record id:    " + record.id);
-                            document.getElementById("test").innerText = JSON.stringify(record);
                             switch (record.recordType) {
                                 case "text":
                                     // TODO: Read text record with record data, lang, and encoding.
