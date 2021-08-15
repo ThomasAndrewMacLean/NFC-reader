@@ -23,6 +23,7 @@
     <div id="test3"></div>
     <div id="test4"></div>
     <div id="test5"></div>
+    <div id="test6"></div>
     <script>
         if ('NDEFReader' in window) {
 
@@ -64,7 +65,10 @@
         }
 
         const nfcPermissionStatus = await navigator.permissions.query({ name: "nfc" });
+        document.getElementById("test6").innerText = JSON.stringify(nfcPermissionStatus)
+
         if (nfcPermissionStatus.state === "granted") {
+            document.getElementById("test5").innerText = ("granted?");
             // NFC access was previously granted, so we can start NFC scanning now.
             startScanning();
         } else {
